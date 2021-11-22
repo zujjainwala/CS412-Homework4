@@ -1,10 +1,12 @@
 #CS 412 Homework 4 Submission Stub
 #Zakir Ujjainwala
 
+from os import getpgid
 import numpy as np
 import sklearn
 
 def get_splits(n, k):
+    # Making a sublist out of the list
     sub = []
     result = []
     all_indices = [item for item in range(n)]
@@ -18,7 +20,7 @@ def get_splits(n, k):
             sub = []
     if sub:
         result.append(sub)
-    #print(result)
+    print(result)
 
     return result
 
@@ -47,4 +49,7 @@ def my_train_test(method, X, y, pi, k):
 
     return np.array([1]*k)
 
-#get_splits(11,3)
+# get_splits(11,3)
+# get_splits(5,2)
+# get_splits(4,2)
+# get_splits(5,3)
