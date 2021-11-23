@@ -45,15 +45,37 @@ def my_cross_val(method, X, y, k):
         return 0
 
     elif method == 'SVC':
+        from sklearn.svm import SVC
+        # Create the model
+        mySVC = SVC(gamma='scale', C=10).fit(X, y)
+
+        # Perform the k-fold cross validation
         return 0
 
     elif method == 'LogisticRegression':
+        from sklearn.linear_model import LogisticRegression
+        # Create the model
+        myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
+        multi_class='multinomial').fit(X,y)
+
+        # Perform the k-fold cross validation
         return 0
 
     elif method == 'RandomForestClassifier':
+        from sklearn.ensemble import RandomForestClassifier
+        # Create the model
+        myRFC = RandomForestClassifier(max_depth=20, random_state=0,
+        n_estimators=500).fit(X,y)
+
+        # Perform the k-fold cross validation
         return 0
 
     elif method == 'XGBClassifier':
+        from sklearn.ensemble import GradientBoostingClassifier
+        # Create the model
+        myXGB = GradientBoostingClassifier(max_depth=5).fit(X,y)
+
+        # Perform the k-fold cross validation
         return 0
 
     return np.array([1]*k)
