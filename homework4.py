@@ -4,6 +4,8 @@
 from os import getpgid
 import numpy as np
 import sklearn
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 def get_splits(n, k):
     # Making a sublist out of the list
@@ -29,6 +31,17 @@ def get_splits(n, k):
 def my_cross_val(method, X, y, k):
 
     if method == 'LinearSVC':
+        from sklearn.svm import LinearSVC
+        from sklearn.model_selection import cross_val_score
+        # Create the model
+        myLinSVC = LinearSVC(max_iter=5000).fit(X, y)
+
+        # have to recreate this function, cannot use cross_val_score
+        # Perform the k-fold cross validation
+        accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
+        print(accuracyLinSVC)
+        print(np.mean(accuracyLinSVC))
+
         return 0
 
     elif method == 'SVC':
