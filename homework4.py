@@ -7,6 +7,10 @@ import sklearn
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
+# Test database
+from sklearn.datasets import load_digits
+digits = load_digits()
+
 def get_splits(n, k):
     # Making a sublist out of the list
     sub = []
@@ -34,11 +38,13 @@ def my_cross_val(method, X, y, k):
         from sklearn.svm import LinearSVC
         from sklearn.model_selection import cross_val_score
         # Create the model
-        myLinSVC = LinearSVC(max_iter=5000).fit(X, y)
+        myLinSVC = LinearSVC(max_iter=5000)
 
         # have to recreate this function, cannot use cross_val_score
         # Perform the k-fold cross validation
-        accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
+        # accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
+        split_data = get_splits(len(myLinSVC), k)
+        
         print(accuracyLinSVC)
         print(np.mean(accuracyLinSVC))
 
@@ -46,34 +52,38 @@ def my_cross_val(method, X, y, k):
 
     elif method == 'SVC':
         from sklearn.svm import SVC
+
         # Create the model
-        mySVC = SVC(gamma='scale', C=10).fit(X, y)
+        mySVC = SVC(gamma='scale', C=10)
 
         # Perform the k-fold cross validation
         return 0
 
     elif method == 'LogisticRegression':
         from sklearn.linear_model import LogisticRegression
+
         # Create the model
         myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
-        multi_class='multinomial').fit(X,y)
+        multi_class='multinomial')
 
         # Perform the k-fold cross validation
         return 0
 
     elif method == 'RandomForestClassifier':
         from sklearn.ensemble import RandomForestClassifier
+
         # Create the model
         myRFC = RandomForestClassifier(max_depth=20, random_state=0,
-        n_estimators=500).fit(X,y)
+        n_estimators=500)
 
         # Perform the k-fold cross validation
         return 0
 
     elif method == 'XGBClassifier':
-        from sklearn.ensemble import GradientBoostingClassifier
+        from xgboost import XGBClassifier
+
         # Create the model
-        myXGB = GradientBoostingClassifier(max_depth=5).fit(X,y)
+        myXGB = XGBClassifier(max_depth=5)
 
         # Perform the k-fold cross validation
         return 0
