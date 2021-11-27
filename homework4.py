@@ -4,12 +4,11 @@
 from os import getpgid
 import numpy as np
 import sklearn
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
+import random
 
 # Test database
-from sklearn.datasets import load_digits
-digits = load_digits()
+# from sklearn.datasets import load_digits
+# digits = load_digits()
 
 def get_splits(n, k):
     # Making a sublist out of the list
@@ -26,27 +25,40 @@ def get_splits(n, k):
             sub = []
     if sub:
         result.append(sub)
-    print(result)
-
+    # print(result)
+    # fold_size = int(all_indices.shape[0] / k)
+    # for i in range(k):
+    #     fold = []
+    #     while len(k) < fold_size:
+    #         r = random.randrange(all_indices.shape[0])
+    #         index = all_indices.index[r]
+    #         fold.append(all_indices.loc[index].values.tolist())
+    #         all_indices = all_indices.drop(index)
+        
+    #     result.append(np.asarray(fold))
+    # print(result)
     return result
 
     # return [[0,2], [1,3]]
 
 def my_cross_val(method, X, y, k):
 
+    # X, y = digits.data, digits.target
+
+    split_data = get_splits(len(X), k)
+    
+    results = []
+
     if method == 'LinearSVC':
         from sklearn.svm import LinearSVC
-        from sklearn.model_selection import cross_val_score
         # Create the model
         myLinSVC = LinearSVC(max_iter=5000)
 
-        # have to recreate this function, cannot use cross_val_score
         # Perform the k-fold cross validation
         # accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
-        split_data = get_splits(len(myLinSVC), k)
         
-        print(accuracyLinSVC)
-        print(np.mean(accuracyLinSVC))
+        #print(accuracyLinSVC)
+        #print(np.mean(accuracyLinSVC))
 
         return 0
 
@@ -88,7 +100,9 @@ def my_cross_val(method, X, y, k):
         # Perform the k-fold cross validation
         return 0
 
-    return np.array([1]*k)
+    else:
+        # Default
+        return np.array([1]*k)
 
 def my_train_test(method, X, y, pi, k):
 
@@ -98,3 +112,4 @@ def my_train_test(method, X, y, pi, k):
 # get_splits(5,2)
 # get_splits(4,2)
 # get_splits(5,3)
+# my_cross_val('LinearSVC', [0], 3, k=15)
