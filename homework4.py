@@ -13,36 +13,38 @@ from itertools import permutations
 # X, y = digits.data, digits.target
 
 def get_splits(n, k):
-    # Making a sublist out of the list
-    # sub = []
-    # result = []
-    # all_indices = [item for item in range(n)]
-    # np.random.shuffle(all_indices)
-    # length = (-1 * len(all_indices) // k * -1)
+    # Making a sublist out of the list - First Attempt
+    sub = []
+    result = []
+    all_indices = [item for item in range(n)]
+    np.random.shuffle(all_indices)
+    length = (-1 * len(all_indices) // k * -1)
+    #length = math.floor(len(all_indices) / k)
 
-    # for i in all_indices:
-    #     sub.append(i)
-    #     if len(sub) == length:
-    #         result.append(sub)
-    #         sub = []
-    # if sub:
-    #     result.append(sub)
-    # print(result)
+    for i in all_indices:
+        sub.append(i)
+        if len(sub) == length:
+            result.append(sub)
+            sub = []
+    if sub:
+        result.append(sub)
+    print(result)
     # return result
 
-    dataSplit = list()
-    dataset = [item for item in range(n)]
-    dataCopy = list(dataset)
-    foldSize = int(len(dataCopy) / k)
-    for _ in range(k):
-        fold = list()
-        while len(fold) < foldSize:
-            index = random.randrange(len(dataCopy))
-            fold.append(dataCopy.pop(index))
-        dataSplit.append(fold)
-
-    return(dataSplit)
-
+    # Second Attempt
+    # dataSplit = list()
+    # dataset = [item for item in range(n)]
+    # print(dataset)
+    # dataCopy = list(dataset)
+    # print(dataCopy)
+    # foldSize = int(len(dataCopy) / k)
+    # for _ in range(k):
+    #     fold = list()
+    #     while len(fold) < foldSize:
+    #         index = random.randrange(len(dataCopy))
+    #         fold.append(dataCopy.pop(index))
+    #     dataSplit.append(fold)
+    # print(dataSplit)
     # return [[0,2], [1,3]]
 
 def my_cross_val(method, X, y, k):
@@ -114,7 +116,7 @@ def my_train_test(method, X, y, pi, k):
 
     rng = np.random.RandomState
     for i in range(k):
-        permutation = X
+        permutation = 0
         ind_test = permutation[:n_test]
         ind_train = permutation[n_test : (n_test + n_train)]
         print(ind_train, ind_test)
@@ -137,9 +139,11 @@ def my_train_test(method, X, y, pi, k):
     else:
         return np.array([1]*k)
 
-# get_splits(11,3)
-# get_splits(5,2)
-# get_splits(4,2)
-# get_splits(5,3)
+get_splits(11,3)
+get_splits(7,2)
+get_splits(4,2)
+get_splits(5,3)
+get_splits(10,4)
+get_splits(15,10)
 # my_cross_val('LinearSVC', [0], 3, k=15)
 # my_train_test('LinearSVC', [0], [1], 0.75, 10)
