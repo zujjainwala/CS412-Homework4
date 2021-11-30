@@ -4,6 +4,7 @@
 import numpy as np
 import sklearn
 import random
+import math
 from itertools import permutations
 
 # Test database
@@ -96,11 +97,15 @@ def my_cross_val(method, X, y, k):
 def my_train_test(method, X, y, pi, k):
     X, y = digits.data, digits.target
     n_samples = len(X)
-    train_size = pi*n_samples
-    test_size = 1 - train_size
+    n_train = int(pi * n_samples)
+    n_test = int(n_samples - n_train)
 
+    rng = np.random.RandomState
     for i in range(k):
-        return i
+        permutation = X
+        ind_test = permutation[:n_test]
+        ind_train = permutation[n_test : (n_test + n_train)]
+        print(ind_train, ind_test)
 
     if method == 'LinearSVC':
         return 0
