@@ -8,28 +8,40 @@ import math
 from itertools import permutations
 
 # Test database
-from sklearn.datasets import load_digits
-digits = load_digits()
-X, y = digits.data, digits.target
+# from sklearn.datasets import load_digits
+# digits = load_digits()
+# X, y = digits.data, digits.target
 
 def get_splits(n, k):
     # Making a sublist out of the list
-    sub = []
-    result = []
-    all_indices = [item for item in range(n)]
-    np.random.shuffle(all_indices)
-    length = (-1 * len(all_indices) // k * -1)
+    # sub = []
+    # result = []
+    # all_indices = [item for item in range(n)]
+    # np.random.shuffle(all_indices)
+    # length = (-1 * len(all_indices) // k * -1)
 
-    for i in all_indices:
-        sub.append(i)
-        if len(sub) == length:
-            result.append(sub)
-            sub = []
-    if sub:
-        result.append(sub)
+    # for i in all_indices:
+    #     sub.append(i)
+    #     if len(sub) == length:
+    #         result.append(sub)
+    #         sub = []
+    # if sub:
+    #     result.append(sub)
     # print(result)
+    # return result
 
-    return result
+    dataSplit = list()
+    dataset = [item for item in range(n)]
+    dataCopy = list(dataset)
+    foldSize = int(len(dataCopy) / k)
+    for _ in range(k):
+        fold = list()
+        while len(fold) < foldSize:
+            index = random.randrange(len(dataCopy))
+            fold.append(dataCopy.pop(index))
+        dataSplit.append(fold)
+
+    return(dataSplit)
 
     # return [[0,2], [1,3]]
 
@@ -130,4 +142,4 @@ def my_train_test(method, X, y, pi, k):
 # get_splits(4,2)
 # get_splits(5,3)
 # my_cross_val('LinearSVC', [0], 3, k=15)
-my_train_test('LinearSVC', [0], [1], 0.75, 10)
+# my_train_test('LinearSVC', [0], [1], 0.75, 10)
