@@ -1,14 +1,15 @@
 #CS 412 Homework 4 Submission Stub
 #Zakir Ujjainwala
 
-from os import getpgid
 import numpy as np
 import sklearn
 import random
+from itertools import permutations
 
 # Test database
-# from sklearn.datasets import load_digits
-# digits = load_digits()
+from sklearn.datasets import load_digits
+digits = load_digits()
+X, y = digits.data, digits.target
 
 def get_splits(n, k):
     # Making a sublist out of the list
@@ -26,24 +27,12 @@ def get_splits(n, k):
     if sub:
         result.append(sub)
     # print(result)
-    # fold_size = int(all_indices.shape[0] / k)
-    # for i in range(k):
-    #     fold = []
-    #     while len(k) < fold_size:
-    #         r = random.randrange(all_indices.shape[0])
-    #         index = all_indices.index[r]
-    #         fold.append(all_indices.loc[index].values.tolist())
-    #         all_indices = all_indices.drop(index)
-        
-    #     result.append(np.asarray(fold))
-    # print(result)
+
     return result
 
     # return [[0,2], [1,3]]
 
 def my_cross_val(method, X, y, k):
-
-    # X, y = digits.data, digits.target
 
     split_data = get_splits(len(X), k)
     
@@ -105,11 +94,35 @@ def my_cross_val(method, X, y, k):
         return np.array([1]*k)
 
 def my_train_test(method, X, y, pi, k):
+    X, y = digits.data, digits.target
+    n_samples = len(X)
+    train_size = pi*n_samples
+    test_size = 1 - train_size
 
-    return np.array([1]*k)
+    for i in range(k):
+        return i
+
+    if method == 'LinearSVC':
+        return 0
+    
+    elif method == 'SVC':
+        return 0
+
+    elif method == 'LogisticRegression':
+        return 0
+
+    elif method == 'RandomForestClassifier':
+        return 0
+
+    elif method == 'XGBClassifier':
+        return 0
+
+    else:
+        return np.array([1]*k)
 
 # get_splits(11,3)
 # get_splits(5,2)
 # get_splits(4,2)
 # get_splits(5,3)
 # my_cross_val('LinearSVC', [0], 3, k=15)
+my_train_test('LinearSVC', [0], [1], 0.75, 10)
