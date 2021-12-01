@@ -144,23 +144,27 @@ def my_train_test(method, X, y, pi, k):
             from sklearn.svm import SVC
             # Create the model
             mySVC = SVC(gamma='scale', C=10).fit(X_train, y_train)
+            scores.append(mySVC.score(X_test, y_test))
 
         elif method == 'LogisticRegression':
             from sklearn.linear_model import LogisticRegression
             # Create the model
             myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
             multi_class='multinomial').fit(X_train, y_train)
+            scores.append(myLGR.score(X_test, y_test))
 
         elif method == 'RandomForestClassifier':
             from sklearn.ensemble import RandomForestClassifier
             # Create the model
             myRFC = RandomForestClassifier(max_depth=20, random_state=0,
             n_estimators=500).fit(X_train, y_train)
+            scores.append(myRFC.score(X_test, y_test))
 
         elif method == 'XGBClassifier':
             from xgboost import XGBClassifier
             # Create the model
             myXGB = XGBClassifier(max_depth=5).fit(X_train, y_train)
+            scores.append(myXGB.score(X_test, y_test))
 
         else:
             return np.array([1]*k)
