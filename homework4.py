@@ -58,60 +58,60 @@ def my_cross_val(method, X, y, k):
     
     results = []
 
-    if method == 'LinearSVC':
-        from sklearn.svm import LinearSVC
-        # Create the model
-        myLinSVC = LinearSVC(max_iter=5000)
+    # if method == 'LinearSVC':
+    #     from sklearn.svm import LinearSVC
+    #     # Create the model
+    #     myLinSVC = LinearSVC(max_iter=5000)
 
-        # Perform the k-fold cross validation
-        # accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
+    #     # Perform the k-fold cross validation
+    #     # accuracyLinSVC = cross_val_score(myLinSVC,X,y,cv=10)
         
-        #print(accuracyLinSVC)
-        #print(np.mean(accuracyLinSVC))
+    #     #print(accuracyLinSVC)
+    #     #print(np.mean(accuracyLinSVC))
 
-        return 0
+    #     return 0
 
-    elif method == 'SVC':
-        from sklearn.svm import SVC
-        # Create the model
-        mySVC = SVC(gamma='scale', C=10)
+    # elif method == 'SVC':
+    #     from sklearn.svm import SVC
+    #     # Create the model
+    #     mySVC = SVC(gamma='scale', C=10)
 
-        # Perform the k-fold cross validation
-        return 0
+    #     # Perform the k-fold cross validation
+    #     return 0
 
-    elif method == 'LogisticRegression':
-        from sklearn.linear_model import LogisticRegression
-        # Create the model
-        myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
-        multi_class='multinomial')
+    # elif method == 'LogisticRegression':
+    #     from sklearn.linear_model import LogisticRegression
+    #     # Create the model
+    #     myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
+    #     multi_class='multinomial')
 
-        # Perform the k-fold cross validation
-        return 0
+    #     # Perform the k-fold cross validation
+    #     return 0
 
-    elif method == 'RandomForestClassifier':
-        from sklearn.ensemble import RandomForestClassifier
-        # Create the model
-        myRFC = RandomForestClassifier(max_depth=20, random_state=0,
-        n_estimators=500)
+    # elif method == 'RandomForestClassifier':
+    #     from sklearn.ensemble import RandomForestClassifier
+    #     # Create the model
+    #     myRFC = RandomForestClassifier(max_depth=20, random_state=0,
+    #     n_estimators=500)
 
-        # Perform the k-fold cross validation
-        return 0
+    #     # Perform the k-fold cross validation
+    #     return 0
 
-    elif method == 'XGBClassifier':
-        from xgboost import XGBClassifier
-        # Create the model
-        myXGB = XGBClassifier(max_depth=5)
+    # elif method == 'XGBClassifier':
+    #     from xgboost import XGBClassifier
+    #     # Create the model
+    #     myXGB = XGBClassifier(max_depth=5)
 
-        # Perform the k-fold cross validation
-        return 0
+    #     # Perform the k-fold cross validation
+    #     return 0
 
-    else:
-        return np.array([1]*k)
+    
+    return np.array([1]*k)
 
 # my_cross_val('LinearSVC', [0], 3, k=15)
 
 def my_train_test(method, X, y, pi, k):
-    X, y = digits.data, digits.target
+    # X, y = digits.data, digits.target
     # n_train = int(pi * n_samples)
     # n_test = int(n_samples - n_train)
     scores = list()
@@ -171,4 +171,4 @@ def my_train_test(method, X, y, pi, k):
         
     return scores
 
-my_train_test('LinearSVC', [0], [1], 0.75, 10)
+# my_train_test('LinearSVC', [0], [1], 0.75, 10)
