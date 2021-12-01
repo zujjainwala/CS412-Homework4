@@ -11,37 +11,37 @@ digits = load_digits()
 
 def get_splits(n, k):
     # Making a sublist out of the list - First Attempt
-    # sub = []
-    # result = []
-    # all_indices = [item for item in range(n)]
-    # np.random.shuffle(all_indices)
-    # length = (-1 * len(all_indices) // k * -1)
+    sub = []
+    result = []
+    all_indices = [item for item in range(n)]
+    np.random.shuffle(all_indices)
+    length = (-1 * len(all_indices) // k * -1)
 
-    # for i in all_indices:
-    #     sub.append(i)
-    #     if len(sub) == length:
-    #         result.append(sub)
-    #         sub = []
-    # if sub:
-    #     result.append(sub)
+    for i in all_indices:
+        sub.append(i)
+        if len(sub) == length:
+            result.append(sub)
+            sub = []
+    if sub:
+        result.append(sub)
     # print(result)
-    # return result
+    return result
 
     # Second Attempt
-    dataSplit = list()
-    dataset = [item for item in range(n)]
-    #print(dataset)
-    dataCopy = list(dataset)
-    #print(dataCopy)
-    foldSize = int(len(dataCopy) / k)
-    for i in range(k):
-        fold = list()
-        while len(fold) < foldSize:
-            index = random.randrange(len(dataCopy))
-            fold.append(dataCopy.pop(index))
-        dataSplit.append(fold)
-    #print(dataSplit)
-    return dataSplit
+    # dataSplit = list()
+    # dataset = [item for item in range(n)]
+    # #print(dataset)
+    # dataCopy = list(dataset)
+    # #print(dataCopy)
+    # foldSize = int(len(dataCopy) / k)
+    # for i in range(k):
+    #     fold = list()
+    #     while len(fold) < foldSize:
+    #         index = random.randrange(len(dataCopy))
+    #         fold.append(dataCopy.pop(index))
+    #     dataSplit.append(fold)
+    # #print(dataSplit)
+    # return dataSplit
     # return [[0,2], [1,3]]
     
 
