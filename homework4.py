@@ -165,6 +165,6 @@ def my_train_test(method, X, y, pi, k):
         else:
             return np.array([1]*k)
         
-        return scores
+    return scores
 
-# my_train_test('LinearSVC', [0], [1], 0.75, 10)
+my_train_test('LinearSVC', [0], [1], 0.75, 10)
