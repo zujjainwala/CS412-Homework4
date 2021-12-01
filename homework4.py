@@ -114,7 +114,7 @@ def my_train_test(method, X, y, pi, k):
     X, y = digits.data, digits.target
     # n_train = int(pi * n_samples)
     # n_test = int(n_samples - n_train)
-    scores = []
+    scores = list()
     for i in range(k):
 
         Xn_samples = len(X)
