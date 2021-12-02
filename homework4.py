@@ -3,6 +3,7 @@
 
 import numpy as np
 import random
+from sklearn.metrics import accuracy_score
 
 # Test database
 # from sklearn.datasets import load_digits
@@ -158,38 +159,57 @@ def my_train_test(method, X, y, pi, k):
         if method == 'LinearSVC':
             from sklearn.svm import LinearSVC
             # Create the model
-            myLinSVC = LinearSVC(max_iter=5000).fit(X_train, y_train)
-            scores.append(myLinSVC.score(X_test, y_test))
+            myLinSVC = LinearSVC(max_iter=5000)
+            myLinSVC.fit(X_train, y_train)
+            # scores.append(myLinSVC.score(X_test, y_test))
+            yhat = myLinSVC.predict(X_test)
+            acc = accuracy_score(y_test, yhat)
+            scores.append(acc)
 
         elif method == 'SVC':
             from sklearn.svm import SVC
             # Create the model
             mySVC = SVC(gamma='scale', C=10).fit(X_train, y_train)
-            scores.append(mySVC.score(X_test, y_test))
+            # scores.append(mySVC.score(X_test, y_test))
+            yhat = myLinSVC.predict(X_test)
+            acc = accuracy_score(y_test, yhat)
+            scores.append(acc)
 
         elif method == 'LogisticRegression':
             from sklearn.linear_model import LogisticRegression
             # Create the model
             myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
             multi_class='multinomial').fit(X_train, y_train)
-            scores.append(myLGR.score(X_test, y_test))
+            # scores.append(myLGR.score(X_test, y_test))
+            yhat = myLinSVC.predict(X_test)
+            acc = accuracy_score(y_test, yhat)
+            scores.append(acc)
 
         elif method == 'RandomForestClassifier':
             from sklearn.ensemble import RandomForestClassifier
             # Create the model
             myRFC = RandomForestClassifier(max_depth=20, random_state=0,
             n_estimators=500).fit(X_train, y_train)
-            scores.append(myRFC.score(X_test, y_test))
+            # scores.append(myRFC.score(X_test, y_test))
+            yhat = myLinSVC.predict(X_test)
+            acc = accuracy_score(y_test, yhat)
+            scores.append(acc)
 
         elif method == 'XGBClassifier':
             from xgboost import XGBClassifier
             # Create the model
             myXGB = XGBClassifier(max_depth=5).fit(X_train, y_train)
-            scores.append(myXGB.score(X_test, y_test))
+            # scores.append(myXGB.score(X_test, y_test))
+            yhat = myLinSVC.predict(X_test)
+            acc = accuracy_score(y_test, yhat)
+            scores.append(acc)
 
         else:
             return np.array([1]*k)
-    
+    # print(scores)
+    for x in range(len(scores)):
+        scores[x] = 1 - scores[x]
+    # print(scores)
     return scores
 
 # my_train_test('LinearSVC', [0], [1], 0.75, 10)
