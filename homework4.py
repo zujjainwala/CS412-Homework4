@@ -5,8 +5,8 @@ import numpy as np
 import random
 
 # Test database
-from sklearn.datasets import load_digits
-digits = load_digits()
+# from sklearn.datasets import load_digits
+# digits = load_digits()
 # X, y = digits.data, digits.target
 
 def get_splits(n, k):
@@ -24,7 +24,12 @@ def get_splits(n, k):
             sub = []
     if sub:
         result.append(sub)
-    # print(result)
+    print(result)
+
+    if (len(result) < k):
+        print('This is less folds than what we want')
+        for x in result:
+            print('This is dumb')
     return result
 
     # Second Attempt
@@ -116,30 +121,46 @@ def my_train_test(method, X, y, pi, k):
     # n_test = int(n_samples - n_train)
     scores = list()
     for i in range(k):
+        # Attempt 1
+        # Xn_samples = len(X)
+        # X_train = list()
+        # Xn_train = pi * Xn_samples
+        # X_test = list(X)
+        # while len(X_train) < Xn_train:
+        #     index = random.randrange(len(X_test))
+        #     X_train.append(X_test.pop(index))
+        # # print(X_train, X_test)
 
-        Xn_samples = len(X)
-        X_train = list()
-        Xn_train = pi * Xn_samples
-        X_test = list(X)
-        while len(X_train) < Xn_train:
-            index = random.randrange(len(X_test))
-            X_train.append(X_test.pop(index))
-        # print(X_train, X_test)
+        # yn_samples = len(y)
+        # y_train = list()
+        # yn_train = pi * yn_samples
+        # y_test = list(y)
+        # while len(y_train) < yn_train:
+        #     ind = random.randrange(len(y_test))
+        #     y_train.append(y_test.pop(index))
 
-        yn_samples = len(y)
-        y_train = list()
-        yn_train = pi * yn_samples
-        y_test = list(y)
-        while len(y_train) < yn_train:
-            ind = random.randrange(len(y_test))
-            y_train.append(y_test.pop(index))
+        # Attempt 2
+        # length = len(X[0])
+        # n_train = int(np.ceil(length*pi))
+        # n_test = length - n_train
+
+        # perm = np.random.RandomState(1).permutation(length)
+        # test_indices = perm[:n_test]
+        # train_indices = perm[n_test:]
+        # print(test_indices)
+        # print(train_indices)
+
+        # Attempt 3
+        train_pct_index = int(pi * len(X))
+        X_train, X_test = X[:train_pct_index], X[train_pct_index:]
+        y_train, y_test = y[:train_pct_index], y[train_pct_index:]
 
         if method == 'LinearSVC':
             from sklearn.svm import LinearSVC
             # Create the model
             myLinSVC = LinearSVC(max_iter=5000).fit(X_train, y_train)
             scores.append(myLinSVC.score(X_test, y_test))
-        
+
         elif method == 'SVC':
             from sklearn.svm import SVC
             # Create the model
@@ -168,7 +189,7 @@ def my_train_test(method, X, y, pi, k):
 
         else:
             return np.array([1]*k)
-        
+    
     return scores
 
 # my_train_test('LinearSVC', [0], [1], 0.75, 10)
