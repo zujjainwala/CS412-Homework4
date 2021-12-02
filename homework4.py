@@ -16,21 +16,40 @@ def get_splits(n, k):
     result = []
     all_indices = [item for item in range(n)]
     np.random.shuffle(all_indices)
-    length = (-1 * len(all_indices) // k * -1)
-
+    # length = (-1 * len(all_indices) // k * -1)
+    n_samples = len(all_indices)
+    length1 = n_samples // k + 1
+    length2 = n_samples // k
+    count = 1
     for i in all_indices:
-        sub.append(i)
-        if len(sub) == length:
-            result.append(sub)
-            sub = []
-    if sub:
-        result.append(sub)
-    print(result)
+        if count <= (n_samples % k):
+            sub.append(i)
+            if len(sub) == length1:
+                result.append(sub)
+                count += 1
+                sub = []
+        else:
+            sub.append(i)
+            if len(sub) == length2:
+                result.append(sub)
+                count += 1
+                sub = []
+    # if sub:
+    #     result.append(sub)
 
-    if (len(result) < k):
-        print('This is less folds than what we want')
-        for x in result:
-            print('This is dumb')
+    # for i in all_indices:
+    #     sub.append(i)
+    #     if len(sub) == length:
+    #         result.append(sub)
+    #         sub = []
+    # if sub:
+    #     result.append(sub)
+    # print(result)
+
+    # if (len(result) < k):
+    #     print('This is less folds than what we want')
+    #     for x in result:
+    #         print('This is dumb')
     return result
 
     # Second Attempt
@@ -163,7 +182,7 @@ def my_train_test(method, X, y, pi, k):
             myLinSVC.fit(X_train, y_train)
             # scores.append(myLinSVC.score(X_test, y_test))
             yhat = myLinSVC.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = 1 - accuracy_score(y_test, yhat)
             scores.append(acc)
 
         elif method == 'SVC':
@@ -206,9 +225,6 @@ def my_train_test(method, X, y, pi, k):
 
         else:
             return np.array([1]*k)
-    # print(scores)
-    for x in range(len(scores)):
-        scores[x] = 1 - scores[x]
     # print(scores)
     return scores
 
