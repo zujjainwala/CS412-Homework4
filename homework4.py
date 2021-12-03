@@ -6,8 +6,8 @@ import random
 from sklearn.metrics import accuracy_score
 
 # Test database
-from sklearn.datasets import load_digits
-digits = load_digits()
+# from sklearn.datasets import load_digits
+# digits = load_digits()
 
 def get_splits(n, k):
     all_indices = [item for item in range(n)]
@@ -102,7 +102,7 @@ def my_cross_val(method, X, y, k):
 # my_cross_val('LinearSVC', [0], 3, k=15)
 
 def my_train_test(method, X, y, pi, k):
-    X, y = digits.data, digits.target
+    # X, y = digits.data, digits.target
     # n_train = int(pi * n_samples)
     # n_test = int(n_samples - n_train)
     scores = list()
@@ -193,7 +193,7 @@ def my_train_test(method, X, y, pi, k):
 
         else:
             return np.array([1]*k)
-    print(scores)
+    # print(scores)
     return scores
 
-my_train_test('LinearSVC', [0], [1], 0.75, 10)
+# my_train_test('LinearSVC', [0], [1], 0.75, 10)
