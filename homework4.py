@@ -153,7 +153,7 @@ def my_train_test(method, X, y, pi, k):
             # acc = 1 - accuracy_score(y_test, yhat)
             # scores.append(acc)
             yhat = myLinSVC.predict(X_test)
-            acc = myLinSVC.score(X_train, y_train)
+            acc = 1 - myLinSVC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'SVC':
@@ -162,7 +162,7 @@ def my_train_test(method, X, y, pi, k):
             mySVC = SVC(gamma='scale', C=10).fit(X_train, y_train)
             # scores.append(mySVC.score(X_test, y_test))
             yhat = mySVC.predict(X_test)
-            acc = mySVC.score(X_train, y_train)
+            acc = 1 - mySVC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'LogisticRegression':
@@ -175,7 +175,7 @@ def my_train_test(method, X, y, pi, k):
             # acc = accuracy_score(y_test, yhat)
             # scores.append(acc)
             yhat = myLGR.predict(X_test)
-            acc = myLGR.score(X_train, y_train)
+            acc = 1 - myLGR.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'RandomForestClassifier':
@@ -188,7 +188,7 @@ def my_train_test(method, X, y, pi, k):
             # acc = accuracy_score(y_test, yhat)
             # scores.append(acc)
             yhat = myRFC.predict(X_test)
-            acc = myRFC.score(X_train, y_train)
+            acc = 1 - myRFC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'XGBClassifier':
@@ -200,7 +200,7 @@ def my_train_test(method, X, y, pi, k):
             # acc = accuracy_score(y_test, yhat)
             # scores.append(acc)
             yhat = myXGB.predict(X_test)
-            acc = myXGB.score(X_train, y_train)
+            acc = 1 - myXGB.score(X_train, y_train)
             scores.append(acc)
 
         else:
