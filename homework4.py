@@ -102,7 +102,7 @@ def my_cross_val(method, X, y, k):
 # my_cross_val('LinearSVC', [0], 3, k=15)
 
 def my_train_test(method, X, y, pi, k):
-    # X, y = digits.data, digits.target
+    #X, y = digits.data, digits.target
     # n_train = int(pi * n_samples)
     # n_test = int(n_samples - n_train)
     scores = list()
@@ -149,8 +149,11 @@ def my_train_test(method, X, y, pi, k):
             myLinSVC = LinearSVC(max_iter=5000)
             myLinSVC.fit(X_train, y_train)
             # scores.append(myLinSVC.score(X_test, y_test))
+            # yhat = myLinSVC.predict(X_test)
+            # acc = 1 - accuracy_score(y_test, yhat)
+            # scores.append(acc)
             yhat = myLinSVC.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = myLinSVC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'SVC':
@@ -159,7 +162,7 @@ def my_train_test(method, X, y, pi, k):
             mySVC = SVC(gamma='scale', C=10).fit(X_train, y_train)
             # scores.append(mySVC.score(X_test, y_test))
             yhat = mySVC.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = mySVC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'LogisticRegression':
@@ -168,8 +171,11 @@ def my_train_test(method, X, y, pi, k):
             myLGR = LogisticRegression(penalty='l2', solver='lbfgs',
             multi_class='multinomial').fit(X_train, y_train)
             # scores.append(myLGR.score(X_test, y_test))
+            # yhat = myLGR.predict(X_test)
+            # acc = accuracy_score(y_test, yhat)
+            # scores.append(acc)
             yhat = myLGR.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = myLGR.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'RandomForestClassifier':
@@ -178,8 +184,11 @@ def my_train_test(method, X, y, pi, k):
             myRFC = RandomForestClassifier(max_depth=20, random_state=0,
             n_estimators=500).fit(X_train, y_train)
             # scores.append(myRFC.score(X_test, y_test))
+            # yhat = myRFC.predict(X_test)
+            # acc = accuracy_score(y_test, yhat)
+            # scores.append(acc)
             yhat = myRFC.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = myRFC.score(X_train, y_train)
             scores.append(acc)
 
         elif method == 'XGBClassifier':
@@ -187,13 +196,16 @@ def my_train_test(method, X, y, pi, k):
             # Create the model
             myXGB = XGBClassifier(max_depth=5).fit(X_train, y_train)
             # scores.append(myXGB.score(X_test, y_test))
+            # yhat = myXGB.predict(X_test)
+            # acc = accuracy_score(y_test, yhat)
+            # scores.append(acc)
             yhat = myXGB.predict(X_test)
-            acc = accuracy_score(y_test, yhat)
+            acc = myXGB.score(X_train, y_train)
             scores.append(acc)
 
         else:
             return np.array([1]*k)
-    # print(scores)
+    #print(scores)
     return scores
 
-# my_train_test('LinearSVC', [0], [1], 0.75, 10)
+#my_train_test('SVC', [0], [1], 0.75, 10)
