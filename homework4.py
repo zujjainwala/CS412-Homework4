@@ -6,20 +6,18 @@ import random
 from sklearn.metrics import accuracy_score
 
 # Test database
-# from sklearn.datasets import load_digits
-# digits = load_digits()
-# X, y = digits.data, digits.target
+from sklearn.datasets import load_digits
+digits = load_digits()
 
 def get_splits(n, k):
-    # Making a sublist out of the list - First Attempt
-    sub = []
-    result = []
     all_indices = [item for item in range(n)]
     np.random.shuffle(all_indices)
-    # length = (-1 * len(all_indices) // k * -1)
     n_samples = len(all_indices)
     length1 = n_samples // k + 1
     length2 = n_samples // k
+
+    sub = []
+    result = []
     count = 1
     for i in all_indices:
         if count <= (n_samples % k):
@@ -36,39 +34,8 @@ def get_splits(n, k):
                 sub = []
     # if sub:
     #     result.append(sub)
-
-    # for i in all_indices:
-    #     sub.append(i)
-    #     if len(sub) == length:
-    #         result.append(sub)
-    #         sub = []
-    # if sub:
-    #     result.append(sub)
-    # print(result)
-
-    # if (len(result) < k):
-    #     print('This is less folds than what we want')
-    #     for x in result:
-    #         print('This is dumb')
     return result
-
-    # Second Attempt
-    # dataSplit = list()
-    # dataset = [item for item in range(n)]
-    # #print(dataset)
-    # dataCopy = list(dataset)
-    # #print(dataCopy)
-    # foldSize = int(len(dataCopy) / k)
-    # for i in range(k):
-    #     fold = list()
-    #     while len(fold) < foldSize:
-    #         index = random.randrange(len(dataCopy))
-    #         fold.append(dataCopy.pop(index))
-    #     dataSplit.append(fold)
-    # #print(dataSplit)
-    # return dataSplit
     # return [[0,2], [1,3]]
-    
 
 # get_splits(11,3)
 # get_splits(7,2)
@@ -80,7 +47,6 @@ def get_splits(n, k):
 def my_cross_val(method, X, y, k):
 
     split_data = get_splits(len(X), k)
-    
     results = []
 
     # if method == 'LinearSVC':
@@ -136,41 +102,43 @@ def my_cross_val(method, X, y, k):
 # my_cross_val('LinearSVC', [0], 3, k=15)
 
 def my_train_test(method, X, y, pi, k):
-    # X, y = digits.data, digits.target
+    X, y = digits.data, digits.target
     # n_train = int(pi * n_samples)
     # n_test = int(n_samples - n_train)
     scores = list()
+    # Attempt 1
+    # Xn_samples = len(X)
+    # X_train = list()
+    # Xn_train = pi * Xn_samples
+    # X_test = list(X)
+    # while len(X_train) < Xn_train:
+    #     index = random.randrange(len(X_test))
+    #     X_train.append(X_test.pop(index))
+    # # print(X_train, X_test)
+
+    # yn_samples = len(y)
+    # y_train = list()
+    # yn_train = pi * yn_samples
+    # y_test = list(y)
+    # while len(y_train) < yn_train:
+    #     ind = random.randrange(len(y_test))
+    #     y_train.append(y_test.pop(index))
+
+    # Attempt 2
+    # length = len(X[0])
+    # n_train = int(np.ceil(length*pi))
+    # n_test = length - n_train
+
+    # perm = np.random.RandomState(1).permutation(length)
+    # test_indices = perm[:n_test]
+    # train_indices = perm[n_test:]
+    # print(test_indices)
+    # print(train_indices)
     for i in range(k):
-        # Attempt 1
-        # Xn_samples = len(X)
-        # X_train = list()
-        # Xn_train = pi * Xn_samples
-        # X_test = list(X)
-        # while len(X_train) < Xn_train:
-        #     index = random.randrange(len(X_test))
-        #     X_train.append(X_test.pop(index))
-        # # print(X_train, X_test)
-
-        # yn_samples = len(y)
-        # y_train = list()
-        # yn_train = pi * yn_samples
-        # y_test = list(y)
-        # while len(y_train) < yn_train:
-        #     ind = random.randrange(len(y_test))
-        #     y_train.append(y_test.pop(index))
-
-        # Attempt 2
-        # length = len(X[0])
-        # n_train = int(np.ceil(length*pi))
-        # n_test = length - n_train
-
-        # perm = np.random.RandomState(1).permutation(length)
-        # test_indices = perm[:n_test]
-        # train_indices = perm[n_test:]
-        # print(test_indices)
-        # print(train_indices)
 
         # Attempt 3
+        random.shuffle(X)
+        random.shuffle(y)
         train_pct_index = int(pi * len(X))
         X_train, X_test = X[:train_pct_index], X[train_pct_index:]
         y_train, y_test = y[:train_pct_index], y[train_pct_index:]
@@ -182,7 +150,7 @@ def my_train_test(method, X, y, pi, k):
             myLinSVC.fit(X_train, y_train)
             # scores.append(myLinSVC.score(X_test, y_test))
             yhat = myLinSVC.predict(X_test)
-            acc = 1 - accuracy_score(y_test, yhat)
+            acc = accuracy_score(y_test, yhat)
             scores.append(acc)
 
         elif method == 'SVC':
@@ -225,7 +193,7 @@ def my_train_test(method, X, y, pi, k):
 
         else:
             return np.array([1]*k)
-    # print(scores)
+    print(scores)
     return scores
 
-# my_train_test('LinearSVC', [0], [1], 0.75, 10)
+my_train_test('LinearSVC', [0], [1], 0.75, 10)
